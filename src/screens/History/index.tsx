@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Animated, { Layout, SlideInRight, SlideOutRight } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { HouseLine } from 'phosphor-react-native';
@@ -65,12 +66,18 @@ export function History() {
       >
         {
           history.map((item) => (
-            <TouchableOpacity
+            <Animated.View
               key={item.id}
-              onPress={() => handleRemove(item.id)}
+              entering={SlideInRight}
+              exiting={SlideOutRight}
+              layout={Layout.duration(200)}
             >
-              <HistoryCard data={item} />
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleRemove(item.id)}
+              >
+                <HistoryCard data={item} />
+              </TouchableOpacity>
+            </Animated.View>
           ))
         }
       </ScrollView>
